@@ -18,3 +18,5 @@ public class MainActivity extends Activity {
         webView.setWebViewClient(new WebViewClient());
 
         webView.loadUrl("file:///android_asset/MASAB_Draw_Simulator_V11_Latin_Date_Time-1.html");
+    }
+}
