@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MASAB Draw Simulator V11 Latin Date Time</title>
+<style>
+:root{--navy:#0b2340;--steel:#496b8f;--glass:#dff5ff;--red:#c92f24}
+*{box-sizing:border-box}body{margin:0;padding:10px;background:linear-gradient(#dce8f4,#f6f9fc);font-family:Tahoma,Arial,sans-serif;color:#172033}
+.app{max-width:540px;margin:auto;background:white;border-radius:22px;padding:12px;box-shadow:0 10px 32px #0002}
+h1{text-align:center;font-size:23px;margin:4px 0}.sub{text-align:center;font-size:12px;color:#667085;margin:4px 0 9px}
+.stage{position:relative;height:330px;margin:auto;overflow:hidden;background:linear-gradient(#edf5fb,#dce8f2);border-radius:18px;border:1px solid #d7e0ea}
+.machine{position:absolute;width:280px;height:295px;left:50%;top:14px;transform:translateX(-50%)}
+.globe{position:absolute;width:235px;height:235px;left:22px;top:18px;border-radius:50%;overflow:hidden;border:7px solid #315d8a;background:radial-gradient(circle at 35% 27%,#ffffffdd 0 7%,#e8f7ffb5 20%,#bfe8fb99 55%,#5e9bc855 78%);box-shadow:inset -20px -22px 32px #35536c44,inset 14px 12px 28px #fff,0 8px 15px #0002}
+.globe:before{content:"";position:absolute;width:58px;height:118px;left:36px;top:20px;border-radius:50%;background:#fff6;transform:rotate(32deg);z-index:4;pointer-events:none}
+.globe:after{content:"";position:absolute;inset:8px;border-radius:50%;border:2px solid #ffffff88;z-index:3;pointer-events:none}
+.ball{position:absolute;width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 24%,#fff 0 22%,#f8fafc 42%,#d7e0ea 70%,#9baabd 100%);border:1px solid #52677e;font-size:10px;font-weight:900;box-shadow:1px 2px 4px #0004;z-index:2}
+.ball.red{background:radial-gradient(circle at 30% 24%,#fff 0 18%,#ffb8b0 35%,#e4473b 62%,#a91f17 100%);border-color:#8d1d16;color:#fff;text-shadow:0 1px 2px #0008}
+.funnel{position:absolute;left:106px;top:242px;width:67px;height:35px;background:linear-gradient(90deg,#173b61,#7897b6,#102f50);clip-path:polygon(10% 0,90% 0,67% 100%,33% 100%);z-index:0}
+.base{position:absolute;left:72px;top:274px;width:136px;height:17px;background:linear-gradient(#4f789f,#153a60);border-radius:4px 4px 10px 10px}
+.tube{position:absolute;right:7px;top:64px;width:47px;height:150px;border:7px solid #3d6b96;border-left-width:4px;border-radius:0 30px 30px 0;background:#e5f8ff88}
+.exitBall{position:absolute;width:36px;height:36px;border-radius:50%;right:10px;top:183px;display:none;place-items:center;background:radial-gradient(circle at 30% 25%,#fff,#e8edf3 48%,#9caebe);border:2px solid #687b90;font-weight:900;z-index:10}
+.air{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);font-size:10px;color:#5d7a99;opacity:0}
+.mixing .air{opacity:1;animation:pulse .45s infinite alternate}@keyframes pulse{to{opacity:.35}}
+.status{text-align:center;min-height:25px;font-weight:bold;margin:7px 0;color:#294e77}
+.tray{direction:ltr;display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.slot{height:54px;border:2px solid #b8c5d3;border-radius:12px;background:linear-gradient(#ffffff,#eef5fb);display:grid;place-items:center;font-size:22px;font-weight:900;box-shadow:inset 0 -3px 0 #0000000c}
+.slot.j{border-color:#d75b52;background:linear-gradient(#fff7f6,#ffe5e2);color:#b42318}
+button{width:100%;margin-top:12px;padding:14px;border:0;border-radius:14px;background:linear-gradient(#1f5f99,#0b2f55);color:white;font-size:18px;font-weight:bold;box-shadow:0 5px 0 #091d34}
+button:active{transform:translateY(3px);box-shadow:0 2px 0 #091d34}button:disabled{opacity:.65}
+.soundbar{display:flex;justify-content:center;margin:9px 0 2px}.soundbtn{width:auto;margin:0;padding:8px 14px;border-radius:12px;background:linear-gradient(#607d9b,#38536f);box-shadow:0 3px 0 #263b50;font-size:13px}.soundbtn:active{box-shadow:0 1px 0 #263b50}.note{text-align:center;color:#667085;font-size:10px;margin:10px 0 2px}
+.history{margin-top:13px}.history h3{margin:0 0 4px;font-size:15px}.row{direction:ltr;text-align:center;padding:7px;border-top:1px solid #eee;font-weight:bold;font-size:13px}.jr{color:#b42318}.stamp{display:block;direction:rtl;color:#667085;font-size:10px;font-weight:normal;margin-top:3px}
+
+
+.machine80box{position:relative;width:235px;height:245px;margin:8px auto 10px}
+.globe80{position:absolute;width:205px;height:205px;left:15px;top:8px;border-radius:50%;overflow:hidden;border:6px solid #315d8a;background:radial-gradient(circle at 35% 27%,#fff,#dff5ffbb 25%,#9bc9e788 62%,#5685ad55);box-shadow:inset -16px -18px 27px #35536c44,inset 12px 10px 23px #fff,0 7px 13px #0002}
+.ball80m{position:absolute;width:23px;height:23px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 24%,#fff,#f7f9fb 43%,#aab9c8 80%);border:1px solid #60758b;font-size:8px;font-weight:900;box-shadow:1px 2px 3px #0004}
+.base80{position:absolute;left:64px;top:211px;width:108px;height:15px;background:linear-gradient(#4f789f,#153a60);border-radius:4px 4px 10px 10px}
+.exit80{position:absolute;right:3px;top:50px;width:32px;height:32px;border-radius:50%;display:none;place-items:center;background:radial-gradient(circle at 30% 25%,#fff,#e8edf3 48%,#9caebe);border:2px solid #687b90;font-weight:900;font-size:11px;z-index:10}
+.status80{text-align:center;min-height:22px;font-weight:bold;color:#294e77;font-size:13px}
+.game80{margin-top:22px;padding-top:18px;border-top:3px solid #e3e9ef}
+.game80 h2{text-align:center;margin:0 0 4px;font-size:21px}.game80 .sub80{text-align:center;color:#667085;font-size:12px;margin:0 0 10px}
+.grid80{direction:ltr;display:grid;grid-template-columns:repeat(10,1fr);gap:4px;padding:8px;background:#f5f8fb;border:1px solid #d8e1ea;border-radius:14px}
+.n80{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:#fff;border:1px solid #b7c5d3;font-size:11px;font-weight:bold;color:#36506b}
+.n80.on{background:linear-gradient(#4d82b6,#173e67);color:#fff;border-color:#143a61;box-shadow:0 2px 5px #0003;transform:scale(1.06)}
+.draw80{background:linear-gradient(#507da8,#173e67)}
+.result80{direction:ltr;display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin:10px 0;min-height:38px}
+.b80{width:35px;height:35px;border-radius:50%;display:grid;place-items:center;background:#edf4fa;border:1px solid #88a7c4;font-weight:bold}
+.hist80 .row{font-size:12px}
+@media(max-width:370px){.stage{height:300px}.machine{transform:translateX(-50%) scale(.9);transform-origin:top center}.tray{gap:3px}.slot{height:48px;font-size:19px}}
+</style>
+</head>
+<body><main class="app">
+<h1>🎱 محاكي سحب Joker</h1><p class="sub">محاكاة شخصية مستوحاة من ماكينة السحب الهوائية</p>
+<div class="stage">
+ <div class="machine" id="machine">
+  <div class="globe" id="globe"></div><div class="funnel"></div><div class="base"></div><div class="tube"></div>
+  <div class="exitBall" id="exitBall"></div><div class="air">↑ دفع هوائي ↑</div>
+ </div>
+</div>
+<div class="status" id="status">جاهزة لبدء السحب</div>
+<div class="tray">
+ <div class="slot">—</div><div class="slot">—</div><div class="slot">—</div><div class="slot">—</div><div class="slot">—</div><div class="slot j">—</div>
+</div>
+<button id="start">ابدأ عملية السحب</button><div class="soundbar"><button class="soundbtn" id="soundBtn">🔊 الصوت: تشغيل</button></div>
+<p class="note">هذه محاكاة ترفيهية وليست أداة رسمية. الاختيار عشوائي ولا يضمن الفوز.</p>
+<div class="history"><h3>آخر النتائج</h3><div id="history">لا توجد نتائج بعد.</div></div>
+
+<section class="game80">
+<h2>🎱 سحب مستقل 1–80</h2>
+<p class="sub80">اختيار 12 رقماً مختلفاً من 1 إلى 80 — مستقل تماماً عن Joker</p>
+<div class="machine80box">
+<div class="globe80" id="globe80"></div><div class="base80"></div><div class="exit80" id="exit80"></div>
+</div>
+<div class="status80" id="status80">جاهزة لسحب 12 كرة</div>
+<div class="grid80" id="grid80"></div>
+<div class="result80" id="result80">—</div>
+<button class="draw80" id="draw80">🎱 اسحب 12 رقماً</button>
+<div class="history hist80"><h3>آخر سحوبات 1–80</h3><div id="hist80">لا توجد نتائج بعد.</div></div>
+</section>
+</main>
+<script>
+const globe=document.getElementById('globe'),machine=document.getElementById('machine'),exitBall=document.getElementById('exitBall');
+const statusEl=document.getElementById('status'),btn=document.getElementById('start'),slots=[...document.querySelectorAll('.slot')],hist=document.getElementById('history');
+let objs=[],mixTimer=null,saved=[],soundOn=true,audioCtx=null,noiseNode=null;
+const soundBtn=document.getElementById('soundBtn');
+function ctx(){if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();return audioCtx}
+function tone(freq=440,dur=.12,type='sine',vol=.05){
+ if(!soundOn)return;let c=ctx(),o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=freq;
+ g.gain.setValueAtTime(vol,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+dur);
+ o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+dur);
+}
+function startAirSound(){
+ if(!soundOn)return;let c=ctx(),len=c.sampleRate*2,b=c.createBuffer(1,len,c.sampleRate),d=b.getChannelData(0);
+ for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*.18;
+ let n=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();n.buffer=b;n.loop=true;f.type='lowpass';f.frequency.value=850;g.gain.value=.08;
+ n.connect(f);f.connect(g);g.connect(c.destination);n.start();noiseNode=n;
+}
+function stopAirSound(){if(noiseNode){try{noiseNode.stop()}catch(e){}noiseNode=null}}
+function ballSound(red=false){tone(red?620:480,.16,'triangle',.08);setTimeout(()=>tone(red?820:650,.12,'sine',.055),90)}
+soundBtn.onclick=()=>{soundOn=!soundOn;if(!soundOn)stopAirSound();soundBtn.textContent=soundOn?'🔊 الصوت: تشغيل':'🔇 الصوت: كتم';};
+const rnd=m=>Math.floor(Math.random()*m)+1,sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function stampNow(){
+ const d=new Date();
+ const date=d.toLocaleDateString('en-GB',{year:'numeric',month:'2-digit',day:'2-digit'});
+ const time=d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+ return date+' — '+time;
+}
+function unique(max,n){let s=new Set();while(s.size<n)s.add(rnd(max));return [...s]}
+function fill(max,red=false){
+ globe.innerHTML='';objs=[];let vals=unique(max,Math.min(max,30));
+ vals.forEach((v,i)=>{let e=document.createElement('div');e.className='ball'+(red?' red':'');e.textContent=v;
+ let a=Math.random()*Math.PI*2,r=25+Math.random()*70,x=104+Math.cos(a)*r,y=104+Math.sin(a)*r;
+ e.style.left=x+'px';e.style.top=y+'px';globe.appendChild(e);
+ objs.push({e,x,y,dx:(Math.random()*8-4)||2.5,dy:(Math.random()*8-4)||-2.5});});
+}
+function startMix(){
+ startAirSound();machine.classList.add('mixing');clearInterval(mixTimer);
+ mixTimer=setInterval(()=>objs.forEach(o=>{o.dx+=(Math.random()-.5)*1.8;o.dy+=(Math.random()-.5)*1.8-0.18;
+ let sp=Math.hypot(o.dx,o.dy);if(sp>7){o.dx=o.dx/sp*7;o.dy=o.dy/sp*7}
+ o.x+=o.dx;o.y+=o.dy;
+ let cx=o.x+13.5-117.5,cy=o.y+13.5-117.5,d=Math.hypot(cx,cy);
+ if(d>101){let nx=cx/d,ny=cy/d,dot=o.dx*nx+o.dy*ny;o.dx-=2*dot*nx;o.dy-=2*dot*ny;o.x-=nx*5;o.y-=ny*5}
+ o.e.style.left=o.x+'px';o.e.style.top=o.y+'px';o.e.style.transform=`rotate(${rnd(360)}deg)`;}),45);
+}
+function stopMix(){clearInterval(mixTimer);stopAirSound();machine.classList.remove('mixing')}
+async function eject(value,index,red=false){
+ statusEl.textContent=red?'جاري سحب كرة Joker…':`جاري سحب الكرة رقم ${index+1}…`;
+ exitBall.className='exitBall'+(red?' red':'');exitBall.textContent=value;exitBall.style.display='grid';exitBall.style.top='58px';exitBall.style.opacity='0';
+ await sleep(120);exitBall.style.transition='top .65s ease-in, opacity .18s';exitBall.style.opacity='1';exitBall.style.top='183px';
+ await sleep(720);slots[index].textContent=value;ballSound(red);if(navigator.vibrate)navigator.vibrate(35);
+ exitBall.style.display='none';exitBall.style.transition='none';await sleep(260);
+}
+btn.onclick=async()=>{
+ btn.disabled=true;btn.textContent='السحب جارٍ…';slots.forEach(s=>s.textContent='—');
+ const main=unique(45,5),joker=rnd(20);
+ fill(45,false);startMix();statusEl.textContent='خلط كرات الأرقام 1–45 بالهواء…';await sleep(1500);
+ for(let i=0;i<5;i++){await eject(main[i],i,false);await sleep(320)}
+ stopMix();statusEl.textContent='تجهيز كرات Joker…';await sleep(550);
+ fill(20,true);startMix();await sleep(1250);await eject(joker,5,true);stopMix();
+ statusEl.textContent='اكتملت عملية السحب ✓';
+ let a=[...main].sort((x,y)=>x-y);
+ a.forEach((v,i)=>slots[i].textContent=v);
+ slots[5].textContent=joker;
+ saved.unshift({a,j:joker,t:stampNow()});saved=saved.slice(0,7);
+ hist.innerHTML=saved.map(x=>`<div class="row">${x.a.join(' · ')} + <span class="jr">Joker ${x.j}</span><span class="stamp">${x.t}</span></div>`).join('');
+ await sleep(450); fill(45,false); machine.classList.remove('joker-mode');
+ btn.disabled=false;btn.textContent='ابدأ سحباً جديداً';if(navigator.vibrate)navigator.vibrate([40,30,80]);
+};
+
+// ماكينة 1–80 مستقلة كلياً عن Joker
+const grid80=document.getElementById('grid80'), result80=document.getElementById('result80'),
+draw80=document.getElementById('draw80'), hist80=document.getElementById('hist80'),
+globe80=document.getElementById('globe80'),exit80=document.getElementById('exit80'),status80=document.getElementById('status80');
+let saved80=[],objs80=[],mix80=null;
+for(let i=1;i<=80;i++){let e=document.createElement('div');e.className='n80';e.dataset.n=i;e.textContent=i;grid80.appendChild(e)}
+function pick80(){let a=[];while(a.length<12){let n=rnd(80);if(!a.includes(n))a.push(n)}return a}
+function fill80(){
+ globe80.innerHTML='';objs80=[];
+ let vals=[];while(vals.length<38){let n=rnd(80);if(!vals.includes(n))vals.push(n)}
+ vals.forEach(v=>{let e=document.createElement('div');e.className='ball80m';e.textContent=v;
+ let a=Math.random()*Math.PI*2,r=20+Math.random()*62,x=91+Math.cos(a)*r,y=91+Math.sin(a)*r;
+ e.style.left=x+'px';e.style.top=y+'px';globe80.appendChild(e);
+ objs80.push({e,x,y,dx:(Math.random()*7-3.5)||2,dy:(Math.random()*7-3.5)||-2});});
+}
+function startMix80(){
+ clearInterval(mix80);mix80=setInterval(()=>objs80.forEach(o=>{
+  o.dx+=(Math.random()-.5)*1.5;o.dy+=(Math.random()-.5)*1.5-.12;
+  let sp=Math.hypot(o.dx,o.dy);if(sp>6){o.dx=o.dx/sp*6;o.dy=o.dy/sp*6}
+  o.x+=o.dx;o.y+=o.dy;let cx=o.x+11.5-102.5,cy=o.y+11.5-102.5,d=Math.hypot(cx,cy);
+  if(d>87){let nx=cx/d,ny=cy/d,dot=o.dx*nx+o.dy*ny;o.dx-=2*dot*nx;o.dy-=2*dot*ny;o.x-=nx*4;o.y-=ny*4}
+  o.e.style.left=o.x+'px';o.e.style.top=o.y+'px';o.e.style.transform=`rotate(${rnd(360)}deg)`;
+ }),45);
+}
+async function eject80(v,i){
+ status80.textContent=`سحب الكرة ${i+1} من 12…`;
+ exit80.textContent=v;exit80.style.display='grid';exit80.style.top='45px';exit80.style.opacity='0';
+ await sleep(70);exit80.style.transition='top .42s ease-in,opacity .12s';exit80.style.opacity='1';exit80.style.top='168px';
+ await sleep(460);document.querySelector(`.n80[data-n="${v}"]`).classList.add('on');
+ result80.innerHTML += `<span class="b80">${v}</span>`;
+ if(soundOn)ballSound(false);if(navigator.vibrate)navigator.vibrate(25);
+ exit80.style.display='none';exit80.style.transition='none';await sleep(110);
+}
+draw80.onclick=async()=>{
+ draw80.disabled=true;draw80.textContent='السحب جارٍ…';
+ document.querySelectorAll('.n80').forEach(x=>x.classList.remove('on'));result80.innerHTML='';
+ let a=pick80();fill80();startMix80();if(soundOn)startAirSound();status80.textContent='خلط كرات 1–80…';await sleep(900);
+ for(let i=0;i<a.length;i++)await eject80(a[i],i);
+ clearInterval(mix80);stopAirSound();status80.textContent='اكتمل سحب 12 كرة ✓';
+ let sorted=[...a].sort((x,y)=>x-y);
+ result80.innerHTML=sorted.map(n=>`<span class="b80">${n}</span>`).join('');
+ saved80.unshift({a:sorted,t:stampNow()});saved80=saved80.slice(0,7);
+ hist80.innerHTML=saved80.map(x=>`<div class="row">${x.a.join(' · ')}<span class="stamp">${x.t}</span></div>`).join('');
+ draw80.disabled=false;draw80.textContent='🎱 اسحب 12 رقماً مرة أخرى';
+ if(navigator.vibrate)navigator.vibrate([35,25,60]);
+};
+</script></body></html>
