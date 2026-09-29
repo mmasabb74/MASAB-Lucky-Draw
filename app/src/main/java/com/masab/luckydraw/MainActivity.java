@@ -17,6 +17,6 @@ public class MainActivity extends Activity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
 
-        webView.loadUrl("file:///android_asset/index.html");
+        webView.loadUrl("file:///android_asset/MASAB_Draw_Simulator_V11_Latin_Date_Time-1.html);
     }
 }
